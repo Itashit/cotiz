@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cotiz — copilote micro-entrepreneur</title>
+  <meta name="description" content="Calcule tes cotisations URSSAF, prépare ta déclaration et fais tes factures. Tes données restent sur ton appareil.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../icons/icon-192.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navigation">
+      <a class="brand" href="#/dashboard">
+        <img src="../icons/icon.svg" alt="" width="32" height="32">
+        <span>Cotiz</span>
+      </a>
+      <nav id="nav-side"></nav>
+      <div id="side-plan" class="side-plan"></div>
+    </aside>
+    <main id="view" tabindex="-1"></main>
+  </div>
+  <nav id="nav-bottom" class="bottomnav" aria-label="Navigation"></nav>
+  <div id="modal-root"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="print-area"></div>
+  <noscript><p style="padding:24px">Cotiz a besoin de JavaScript pour fonctionner.</p></noscript>
+  <script src="config.js"></script>
+  <script src="rates.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
