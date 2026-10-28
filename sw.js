@@ -1,6 +1,6 @@
 // Service worker de Cotiz : l'app fonctionne hors ligne.
 // Réseau d'abord (pour recevoir les mises à jour du barème), cache si pas de connexion.
-const CACHE = 'cotiz-1.0.0';
+const CACHE = 'cotiz-1.1.0';
 const ASSETS = [
   './',
   './app/',
@@ -12,6 +12,7 @@ const ASSETS = [
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './fonts/inter-latin.woff2',
 ];
 
 self.addEventListener('install', (event) => {

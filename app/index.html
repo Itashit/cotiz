@@ -3,27 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Cotiz — copilote micro-entrepreneur</title>
+  <title>Cotiz</title>
   <meta name="description" content="Calcule tes cotisations URSSAF, prépare ta déclaration et fais tes factures. Tes données restent sur ton appareil.">
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../icons/icon-192.png">
+  <link rel="preload" href="../fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
   <div class="shell">
     <aside class="sidebar" aria-label="Navigation">
-      <a class="brand" href="#/dashboard">
-        <img src="../icons/icon.svg" alt="" width="32" height="32">
-        <span>Cotiz</span>
-      </a>
+      <a class="brand" href="#/dashboard"><img src="../icons/icon.svg" width="26" height="26" alt=""><span>Cotiz</span></a>
+      <div id="side-org"></div>
       <nav id="nav-side"></nav>
       <div id="side-plan" class="side-plan"></div>
     </aside>
-    <main id="view" tabindex="-1"></main>
+    <div class="main-col">
+      <div id="demo-bar"></div>
+      <header class="mobile-bar">
+        <a class="brand" href="#/dashboard"><img src="../icons/icon.svg" width="24" height="24" alt=""><span>Cotiz</span></a>
+        <span id="mobile-plan"></span>
+      </header>
+      <main id="view" tabindex="-1"></main>
+    </div>
   </div>
-  <nav id="nav-bottom" class="bottomnav" aria-label="Navigation"></nav>
+  <nav id="nav-bottom" class="tabbar" aria-label="Navigation"></nav>
   <div id="modal-root"></div>
   <div id="toast" role="status" aria-live="polite"></div>
   <div id="print-area"></div>

@@ -1,14 +1,16 @@
-:root { --bg: #f7f7fc; --surface: #ffffff; --text: #11152a; --muted: #586079; --border: #e3e5f0; --brand: #4f46e5; --soft: #eceeff; color-scheme: light; }
+@font-face { font-family: "Inter"; src: url("../fonts/inter-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+:root { --bg: #ffffff; --soft: #fafaf9; --text: #1c1c1a; --muted: #6b6a65; --border: #e7e6e2; --brand: #0e7c66; color-scheme: light; }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #0b0e1c; --surface: #141a2e; --text: #eef0f8; --muted: #9aa2bd; --border: #262e50; --brand: #8b84ff; --soft: #22275a; color-scheme: dark; }
+  :root { --bg: #121211; --soft: #1b1b1a; --text: #ededea; --muted: #a3a29c; --border: #2d2d2a; --brand: #34b394; color-scheme: dark; }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-main { width: min(760px, 100% - 32px); margin: 0 auto; padding: 40px 0 80px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15.5px/1.7 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+main { width: min(720px, 100% - 40px); margin: 0 auto; padding: 40px 0 80px; }
 a { color: var(--brand); }
-.back { display: inline-block; margin-bottom: 24px; font-weight: 600; text-decoration: none; }
-h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.2; letter-spacing: -.02em; margin: 0 0 6px; }
-h2 { font-size: 19px; margin: 32px 0 8px; }
+.back { display: inline-block; margin-bottom: 28px; font-weight: 500; font-size: 14px; text-decoration: none; color: var(--muted); }
+.back:hover { color: var(--text); }
+h1 { font-size: clamp(26px, 4vw, 34px); line-height: 1.2; letter-spacing: -.025em; font-weight: 600; margin: 0 0 6px; }
+h2 { font-size: 17px; font-weight: 600; margin: 32px 0 8px; letter-spacing: -.01em; }
 p { margin: 0 0 12px; }
-.muted { color: var(--muted); }
-.highlight { background: var(--soft); border-radius: 12px; padding: 16px 18px; margin-top: 20px; }
+.muted { color: var(--muted); font-size: 14px; }
+.highlight { background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-top: 20px; }

@@ -3,227 +3,242 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cotiz — le copilote URSSAF des micro-entrepreneurs</title>
-  <meta name="description" content="Cotiz calcule tes cotisations URSSAF, te rappelle tes échéances, surveille tes seuils et fait tes factures. Gratuit pour démarrer, Pro à 2,99 €/mois.">
-  <meta name="theme-color" content="#4f46e5">
+  <title>Cotiz — cotisations URSSAF, déclarations et factures pour micro-entrepreneurs</title>
+  <meta name="description" content="Cotiz calcule tes cotisations URSSAF, te rappelle tes échéances, surveille tes seuils de TVA et édite tes factures. Gratuit pour démarrer, Pro à 2,99 €/mois.">
+  <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <meta property="og:title" content="Cotiz — sache enfin combien tu gagnes vraiment">
-  <meta property="og:description" content="Cotisations URSSAF, échéances, seuils de TVA et factures : le copilote des micro-entrepreneurs. Gratuit pour démarrer.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <meta property="og:title" content="Cotiz — sache exactement ce que tu dois à l’URSSAF">
+  <meta property="og:description" content="Cotisations, déclarations, seuils de TVA et factures pour les micro-entrepreneurs. Gratuit pour démarrer.">
   <meta property="og:image" content="assets/og.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <style>
+    @font-face { font-family: "Inter"; src: url("fonts/inter-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
     :root {
-      --bg: #f7f7fc; --surface: #ffffff; --surface-2: #eff0f9; --text: #11152a; --muted: #586079;
-      --border: #e3e5f0; --brand: #4f46e5; --brand-2: #4338ca; --brand-soft: #eceeff; --accent: #10b981;
-      --shadow: 0 1px 2px rgba(17, 24, 39, .05), 0 12px 32px rgba(17, 24, 39, .08);
+      --bg: #ffffff; --soft: #fafaf9; --soft-2: #f4f4f2; --text: #1c1c1a; --muted: #6b6a65; --faint: #9b9a94;
+      --border: #e7e6e2; --brand: #0e7c66; --brand-hover: #0b6755; --brand-soft: #e8f3ef; --ink: #1c1c1a;
       color-scheme: light;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0b0e1c; --surface: #141a2e; --surface-2: #1b2140; --text: #eef0f8; --muted: #9aa2bd;
-        --border: #262e50; --brand: #8b84ff; --brand-2: #a5a0ff; --brand-soft: #22275a; --accent: #34d399;
-        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px rgba(0, 0, 0, .3);
+        --bg: #121211; --soft: #171716; --soft-2: #1f1f1d; --text: #ededea; --muted: #a3a29c; --faint: #75746e;
+        --border: #2d2d2a; --brand: #34b394; --brand-hover: #4cc4a6; --brand-soft: #16302a; --ink: #0b0b0a;
         color-scheme: dark;
       }
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-    a { color: var(--brand); }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-feature-settings: "cv11", "ss01"; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
     img { max-width: 100%; display: block; }
-    .wrap { width: min(1120px, 100% - 32px); margin: 0 auto; }
-    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: -.02em; }
+    h1, h2, h3 { margin: 0; line-height: 1.15; letter-spacing: -.025em; font-weight: 600; }
     p { margin: 0; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 22px; border-radius: 12px; font-weight: 700; text-decoration: none; background: var(--brand); color: #fff; border: 1px solid transparent; white-space: nowrap; }
-    .btn:hover { background: var(--brand-2); }
-    @media (prefers-color-scheme: dark) { .btn { color: #0b0e1c; } }
-    .btn.ghost { background: var(--surface); color: var(--text); border-color: var(--border); }
-    .btn.ghost:hover { background: var(--surface-2); }
+    .wrap { width: min(1120px, 100% - 40px); margin: 0 auto; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 18px; border-radius: 8px; font-weight: 500; font-size: 15px; text-decoration: none; border: 1px solid var(--border); background: var(--bg); color: var(--text); white-space: nowrap; box-shadow: 0 1px 2px rgba(16,24,40,.05); }
+    .btn:hover { background: var(--soft-2); }
+    .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+    .btn.primary:hover { background: var(--brand-hover); }
+    @media (prefers-color-scheme: dark) { .btn.primary { color: #08201a; } }
+    .btn.sm { height: 36px; padding: 0 14px; font-size: 14px; }
 
-    header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-    header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
-    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 21px; color: var(--text); text-decoration: none; letter-spacing: -.02em; }
-    header nav { display: flex; align-items: center; gap: 22px; }
-    header nav a:not(.btn) { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 15px; }
-    header nav a:not(.btn):hover { color: var(--text); }
-    header .btn { padding: 9px 16px; font-size: 15px; }
-    @media (max-width: 720px) { header nav a:not(.btn) { display: none; } }
+    header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+    header .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
+    .logo { display: flex; align-items: center; gap: 9px; font-weight: 650; font-size: 17px; text-decoration: none; }
+    header nav { display: flex; gap: 24px; margin-left: 8px; }
+    header nav a { color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+    header nav a:hover { color: var(--text); }
+    header .right { margin-left: auto; display: flex; gap: 8px; }
+    @media (max-width: 760px) { header nav, header .right .btn:not(.primary) { display: none; } }
 
-    .hero { padding: 72px 0 40px; text-align: center; }
-    .pill { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); font-weight: 700; font-size: 14px; }
-    .hero h1 { font-size: clamp(36px, 6vw, 64px); margin: 20px auto 18px; max-width: 900px; letter-spacing: -.035em; }
-    .hero h1 em { font-style: normal; background: linear-gradient(120deg, #6366f1, #a855f7 60%, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero .lead { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 680px; margin: 0 auto; }
-    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-    .trust { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 22px; color: var(--muted); font-size: 14.5px; font-weight: 600; }
-    .trust span::before { content: "✓ "; color: var(--accent); }
-    .shot { margin: 48px auto 0; max-width: 1040px; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 30px 80px rgba(79, 70, 229, .22); background: var(--surface); }
+    .hero { padding: 80px 0 40px; }
+    .hero .wrap { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; background: var(--soft); }
+    .tag b { color: var(--brand); font-weight: 600; }
+    .hero h1 { font-size: clamp(36px, 5.4vw, 60px); max-width: 820px; margin: 22px 0 18px; letter-spacing: -.035em; }
+    .hero .lead { font-size: clamp(17px, 2vw, 19px); color: var(--muted); max-width: 640px; }
+    .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+    .trust { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 20px; color: var(--muted); font-size: 14px; }
+    .trust span { display: inline-flex; align-items: center; gap: 6px; }
+    .trust svg { width: 16px; height: 16px; color: var(--brand); }
+    .shot { margin-top: 56px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(16,24,40,.06), 0 24px 64px rgba(16,24,40,.12); background: var(--soft); padding: 8px; }
+    .shot img { border-radius: 8px; border: 1px solid var(--border); }
 
-    section { padding: 72px 0; }
-    .eyebrow { color: var(--brand); font-weight: 800; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
-    .sec-head { text-align: center; max-width: 720px; margin: 0 auto 40px; }
-    .sec-head h2 { font-size: clamp(28px, 4vw, 42px); margin-top: 8px; }
-    .sec-head p { color: var(--muted); margin-top: 12px; }
+    section { padding: 88px 0; }
+    section.soft { background: var(--soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .sec-head { max-width: 640px; margin-bottom: 44px; }
+    .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .eyebrow { font-size: 14px; font-weight: 600; color: var(--brand); }
+    .sec-head h2 { font-size: clamp(28px, 3.6vw, 38px); margin-top: 8px; }
+    .sec-head p { color: var(--muted); margin-top: 12px; font-size: 17px; }
 
-    .pains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-    .pain { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; }
-    .pain .q { font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
-    .pain .a { color: var(--muted); margin-top: 10px; font-size: 16px; }
-    .pain .a strong { color: var(--text); }
+    .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+    .feat { padding: 28px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg); }
+    .feat .ico { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text); margin-bottom: 16px; background: var(--bg); }
+    .feat .ico svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .feat h3 { font-size: 16px; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+    .feat p { color: var(--muted); margin-top: 8px; font-size: 15px; }
+    .pro { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 5px; color: var(--brand); background: var(--brand-soft); letter-spacing: .02em; }
+    @media (max-width: 900px) { .features { grid-template-columns: minmax(0, 1fr); } }
 
-    .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-    .feat { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; box-shadow: var(--shadow); }
-    .feat .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; margin-bottom: 14px; }
-    .feat .ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .feat h3 { font-size: 18px; }
-    .feat p { color: var(--muted); margin-top: 8px; font-size: 15.5px; }
-    .feat .tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: linear-gradient(135deg, #f59e0b, #ec4899); color: #fff; vertical-align: middle; letter-spacing: .04em; }
-    @media (max-width: 900px) { .pains, .features { grid-template-columns: 1fr; } }
+    .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; counter-reset: s; }
+    .step { border-top: 2px solid var(--text); padding-top: 18px; }
+    .step::before { counter-increment: s; content: "0" counter(s); font-size: 13px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums; }
+    .step h3 { font-size: 18px; margin-top: 8px; }
+    .step p { color: var(--muted); margin-top: 8px; font-size: 15px; }
+    @media (max-width: 800px) { .steps { grid-template-columns: minmax(0, 1fr); } }
 
-    .pricing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 860px; margin: 0 auto; }
-    .plan { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 30px; display: flex; flex-direction: column; }
-    .plan.pro { border: 2px solid var(--brand); box-shadow: 0 20px 60px rgba(79, 70, 229, .18); position: relative; }
-    .plan.pro::before { content: "Recommandé"; position: absolute; top: -13px; left: 30px; background: var(--brand); color: #fff; font-size: 12.5px; font-weight: 800; padding: 3px 12px; border-radius: 999px; }
-    .plan h3 { font-size: 20px; }
-    .plan .price { font-size: 46px; font-weight: 800; letter-spacing: -.03em; margin: 10px 0 2px; }
-    .plan .price small { font-size: 17px; color: var(--muted); font-weight: 600; letter-spacing: 0; }
-    .plan .sub { color: var(--muted); font-size: 15px; }
-    .plan ul { list-style: none; padding: 0; margin: 22px 0 26px; display: flex; flex-direction: column; gap: 10px; font-size: 15.5px; flex: 1; }
-    .plan li::before { content: "✓"; color: var(--accent); font-weight: 800; margin-right: 10px; }
-    .compare { text-align: center; color: var(--muted); margin-top: 24px; font-size: 15px; }
-    @media (max-width: 720px) { .pricing { grid-template-columns: 1fr; } }
+    .pricing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 820px; margin: 0 auto; }
+    .plan { border: 1px solid var(--border); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; background: var(--bg); }
+    .plan.highlight { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+    .plan .name { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 16px; }
+    .plan .price { font-size: 40px; font-weight: 600; letter-spacing: -.03em; margin: 14px 0 2px; font-variant-numeric: tabular-nums; }
+    .plan .price small { font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+    .plan .sub { color: var(--muted); font-size: 14.5px; }
+    .plan ul { list-style: none; margin: 22px 0 26px; padding: 22px 0 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; font-size: 15px; flex: 1; }
+    .plan li { display: flex; gap: 10px; }
+    .plan li svg { width: 18px; height: 18px; flex: none; margin-top: 3px; color: var(--brand); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .compare { text-align: center; color: var(--muted); margin-top: 22px; font-size: 14.5px; }
+    @media (max-width: 720px) { .pricing { grid-template-columns: minmax(0, 1fr); } }
 
-    .faq { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-    details { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 22px; }
-    summary { cursor: pointer; font-weight: 700; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+    .faq { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--border); }
+    details { border-bottom: 1px solid var(--border); padding: 18px 0; }
+    summary { cursor: pointer; font-weight: 500; font-size: 16.5px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
     summary::-webkit-details-marker { display: none; }
-    summary::after { content: "+"; color: var(--brand); font-size: 22px; line-height: 1; }
+    summary::after { content: "+"; color: var(--muted); font-size: 20px; line-height: 1; font-weight: 400; }
     details[open] summary::after { content: "−"; }
-    details p { color: var(--muted); margin-top: 12px; font-size: 16px; }
+    details p { color: var(--muted); margin-top: 10px; font-size: 15.5px; }
 
-    .final { text-align: center; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border-radius: 28px; padding: 56px 24px; }
-    .final h2 { font-size: clamp(28px, 4vw, 40px); }
-    .final p { opacity: .85; margin-top: 12px; }
-    .final .btn { background: #fff; color: #3730a3; margin-top: 26px; }
-    .stores { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
-    .stores a { color: #fff; font-weight: 700; font-size: 15px; }
+    .final { background: var(--ink); color: #f4f4f2; border-radius: 18px; padding: 56px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .final h2 { font-size: clamp(26px, 3.2vw, 34px); max-width: 560px; }
+    .final p { color: #a3a29c; margin-top: 8px; }
+    .final .btn { border-color: transparent; }
+    .stores { margin-top: 12px; font-size: 14px; }
+    .stores a { color: #f4f4f2; }
 
-    footer { padding: 40px 0 56px; color: var(--muted); font-size: 14.5px; }
-    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    footer a { color: var(--muted); }
-    footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    footer { border-top: 1px solid var(--border); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+    footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <a class="logo" href="./"><img src="icons/icon.svg" width="32" height="32" alt=""> Cotiz</a>
+      <a class="logo" href="./"><img src="icons/icon.svg" width="26" height="26" alt=""> Cotiz</a>
       <nav>
         <a href="#fonctionnalites">Fonctionnalités</a>
         <a href="#tarifs">Tarifs</a>
-        <a href="#faq">FAQ</a>
-        <a class="btn" href="app/">Ouvrir l’app</a>
+        <a href="#faq">Questions</a>
       </nav>
+      <div class="right">
+        <a class="btn sm" href="app/?demo=1#/dashboard">Démo</a>
+        <a class="btn sm primary" href="app/">Ouvrir l’app</a>
+      </div>
     </div>
   </header>
 
   <main>
-    <div class="hero wrap">
-      <span class="pill">Barème URSSAF 2026 intégré</span>
-      <h1>Micro-entrepreneur ? Sache enfin <em>combien tu gagnes vraiment.</em></h1>
-      <p class="lead">Cotiz calcule tes cotisations au centime, te rappelle quand déclarer, surveille tes seuils de TVA et fait tes factures. Fini le tableur et la boule au ventre avant chaque déclaration.</p>
-      <div class="cta">
-        <a class="btn" href="app/">Commencer gratuitement</a>
-        <a class="btn ghost" href="app/?demo=1#/dashboard">Voir la démo</a>
-      </div>
-      <div class="trust"><span>Sans compte à créer</span><span>Tes données restent sur ton appareil</span><span>Windows, Android, iPhone, Mac</span></div>
-      <div class="shot"><img src="assets/screen-dashboard.png" width="1366" height="768" alt="Tableau de bord de Cotiz : cotisations à payer, échéance, chiffre d’affaires et seuils"></div>
-    </div>
-
-    <section>
+    <div class="hero">
       <div class="wrap">
-        <div class="sec-head">
-          <div class="eyebrow">Ça te parle ?</div>
-          <h2>Les 3 questions que tout micro-entrepreneur se pose</h2>
+        <span class="tag"><b>Nouveau</b> Barème URSSAF 2026 et réforme de l’ACRE intégrés</span>
+        <h1>Sache exactement ce que tu dois à l’URSSAF.</h1>
+        <p class="lead">Cotiz calcule tes cotisations, te rappelle tes échéances, surveille tes seuils de TVA et édite tes factures. L’outil de gestion pensé pour les micro-entrepreneurs.</p>
+        <div class="cta">
+          <a class="btn primary" href="app/">Essayer gratuitement</a>
+          <a class="btn" href="app/?demo=1#/dashboard">Voir la démo</a>
         </div>
-        <div class="pains">
-          <div class="pain"><div class="q">« Combien je dois à l’URSSAF ? »</div><p class="a">Cotiz applique le bon taux selon ton activité, l’ACRE et le versement libératoire. <strong>Tu sais ce qui est à toi avant de le dépenser.</strong></p></div>
-          <div class="pain"><div class="q">« C’est quand déjà, la déclaration ? »</div><p class="a">Compte à rebours, montants prêts à copier sur le site de l’URSSAF. <strong>Plus jamais de majoration pour retard.</strong></p></div>
-          <div class="pain"><div class="q">« Je vais dépasser le seuil de TVA ? »</div><p class="a">Jauges en temps réel sur les plafonds micro et la franchise de TVA. <strong>Tu le vois venir des mois à l’avance.</strong></p></div>
+        <div class="trust">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sans inscription</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Données stockées sur ton appareil</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Windows, Android, iPhone, Mac</span>
         </div>
+        <div class="shot"><img src="assets/screen-dashboard.png" width="1440" height="900" alt="Tableau de bord de Cotiz : prochaine déclaration, chiffre d’affaires, cotisations et seuils"></div>
       </div>
-    </section>
+    </div>
 
     <section id="fonctionnalites">
       <div class="wrap">
         <div class="sec-head">
           <div class="eyebrow">Fonctionnalités</div>
-          <h2>Tout ce qu’il faut, rien de compliqué</h2>
-          <p>Pensé pour les auto-entrepreneurs : freelances, artisans, VTC, e-commerçants, coachs, créateurs…</p>
+          <h2>Tout ce qu’il faut pour gérer une micro-entreprise.</h2>
+          <p>Freelances, artisans, chauffeurs VTC, e-commerçants, coachs : Cotiz s’adapte à ton activité.</p>
         </div>
         <div class="features">
-          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8.5 6.5h7M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01"/></svg></div><h3>Cotisations calculées</h3><p>Ventes, prestations BIC, BNC, CIPAV, activité mixte, ACRE à 50 % ou 25 %, formation pro : tout est pris en compte.</p></div>
-          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></div><h3>Déclaration en 2 minutes</h3><p>Mensuelle ou trimestrielle, Cotiz te donne les montants arrondis à l’euro, prêts à copier sur autoentrepreneur.urssaf.fr.</p></div>
-          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><h3>Seuils sous surveillance</h3><p>Plafond micro, franchise de TVA, prorata la 1re année : une alerte avant qu’il ne soit trop tard.</p></div>
-          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Factures et devis <span class="tag">PRO</span></h3><p>Numérotation continue, mentions obligatoires, PDF en un clic. Une facture payée s’ajoute toute seule à tes recettes.</p></div>
-          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg></div><h3>Livre des recettes <span class="tag">PRO</span></h3><p>Obligatoire en micro-entreprise. Exporte-le en CSV ou PDF le jour où on te le demande.</p></div>
-          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h3>Simulateur <span class="tag">PRO</span></h3><p>Combien facturer pour te verser 2 000 € net ? Quel tarif journalier minimum ? La réponse en direct.</p></div>
+          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8.5 6.5h7M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01"/></svg></div><h3>Cotisations calculées</h3><p>Vente, prestations BIC, BNC, CIPAV ou activité mixte. ACRE, versement libératoire et formation professionnelle inclus.</p></div>
+          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></div><h3>Déclarations préparées</h3><p>Mensuelles ou trimestrielles, avec les montants arrondis à l’euro, prêts à recopier sur le site de l’URSSAF.</p></div>
+          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><h3>Seuils surveillés</h3><p>Plafond de la micro-entreprise et franchise de TVA, avec le prorata la première année.</p></div>
+          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Factures et devis <span class="pro">PRO</span></h3><p>Numérotation continue, mentions obligatoires et aperçu en direct. Une facture payée s’ajoute à tes recettes.</p></div>
+          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg></div><h3>Livre des recettes <span class="pro">PRO</span></h3><p>Obligatoire en micro-entreprise. Exporte-le en CSV ou en PDF en un clic.</p></div>
+          <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h3>Simulateur <span class="pro">PRO</span></h3><p>Le chiffre d’affaires et le tarif journalier qu’il te faut pour atteindre ton revenu cible.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="eyebrow">Comment ça marche</div>
+          <h2>Opérationnel en une minute.</h2>
+        </div>
+        <div class="steps">
+          <div class="step"><h3>Décris ton activité</h3><p>Type d’activité, date de début, ACRE, versement libératoire : trois questions et c’est configuré.</p></div>
+          <div class="step"><h3>Ajoute tes recettes</h3><p>Chaque paiement encaissé, en quelques secondes. Ou marque une facture comme payée.</p></div>
+          <div class="step"><h3>Déclare sereinement</h3><p>Cotiz te prévient avant l’échéance et te donne les montants exacts à déclarer.</p></div>
         </div>
       </div>
     </section>
 
     <section id="tarifs">
       <div class="wrap">
-        <div class="sec-head">
+        <div class="sec-head center">
           <div class="eyebrow">Tarifs</div>
-          <h2>Moins cher qu’un café par mois</h2>
-          <p>Commence gratuitement. Passe à Pro quand tu veux tout automatiser.</p>
+          <h2>Un prix simple.</h2>
+          <p>Commence gratuitement. Passe à Pro quand tu veux tes factures et tes exports.</p>
         </div>
         <div class="pricing">
           <div class="plan">
-            <h3>Gratuit</h3>
+            <div class="name">Gratuit</div>
             <div class="price">0 €</div>
             <p class="sub">Pour démarrer ton activité</p>
             <ul>
-              <li>Calcul des cotisations et du net</li>
-              <li>Rappels et montants de déclaration</li>
-              <li>Suivi des seuils micro et TVA</li>
-              <li>Jusqu’à 20 recettes</li>
-              <li>Sauvegarde de tes données</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Calcul des cotisations et du revenu net</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Échéances et montants à déclarer</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Suivi du plafond micro et de la TVA</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Jusqu’à 20 recettes</li>
             </ul>
-            <a class="btn ghost" href="app/">Commencer</a>
+            <a class="btn" href="app/">Commencer</a>
           </div>
-          <div class="plan pro">
-            <h3>Pro</h3>
-            <div class="price">2,99 € <small>/ mois</small></div>
+          <div class="plan highlight">
+            <div class="name">Pro <span class="pro">PRO</span></div>
+            <div class="price">2,99 € <small>par mois</small></div>
             <p class="sub">Sans engagement, résiliable en un clic</p>
             <ul>
-              <li>Tout le gratuit, plus :</li>
-              <li>Recettes illimitées</li>
-              <li>Factures et devis conformes en PDF</li>
-              <li>Livre des recettes CSV et PDF</li>
-              <li>Simulateur de revenus et de tarif</li>
-              <li>Barème mis à jour chaque année</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Tout le plan Gratuit</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Recettes illimitées</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Factures et devis en PDF</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Livre des recettes CSV et PDF</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Simulateur de revenu et de tarif</li>
             </ul>
-            <a class="btn" href="app/#/reglages/abonnement">Passer Pro</a>
+            <a class="btn primary" href="app/#/reglages/abonnement">Passer à Pro</a>
           </div>
         </div>
-        <p class="compare">Les logiciels de facturation pour indépendants coûtent souvent 9 à 15 € par mois. Cotiz Pro : 2,99 €.</p>
+        <p class="compare">Les logiciels de facturation pour indépendants coûtent souvent 9 à 15 € par mois.</p>
       </div>
     </section>
 
-    <section id="faq">
+    <section id="faq" class="soft">
       <div class="wrap">
-        <div class="sec-head"><div class="eyebrow">FAQ</div><h2>Questions fréquentes</h2></div>
+        <div class="sec-head center"><div class="eyebrow">Questions</div><h2>Questions fréquentes</h2></div>
         <div class="faq">
-          <details><summary>Où sont stockées mes données ?</summary><p>Uniquement sur ton appareil, dans l’app. Pas de compte, pas de serveur, pas de pub, pas de revente. Tu peux exporter une sauvegarde à tout moment pour changer d’appareil.</p></details>
-          <details><summary>Sur quels appareils fonctionne Cotiz ?</summary><p>Partout : installe-la depuis le Microsoft Store sur Windows, ou ouvre l’app dans ton navigateur et choisis « Installer » ou « Ajouter à l’écran d’accueil » sur Android, iPhone, Mac et Linux. Elle marche même hors ligne.</p></details>
-          <details><summary>Les taux sont-ils à jour ?</summary><p>Oui : barème 2026 (décret du 8 septembre 2025), plafonds 2026-2028, ACRE réformée au 1er juillet 2026. Le barème est mis à jour chaque année.</p></details>
-          <details><summary>Comment je résilie Pro ?</summary><p>En un clic depuis le lien « Gérer mon abonnement » de l’app ou de l’e-mail de confirmation. Tu gardes l’accès jusqu’à la fin du mois payé, et tes données restent intactes.</p></details>
+          <details><summary>Où sont stockées mes données ?</summary><p>Uniquement sur ton appareil. Pas de compte, pas de serveur, pas de publicité. Tu peux exporter une sauvegarde à tout moment pour changer d’appareil.</p></details>
+          <details><summary>Sur quels appareils fonctionne Cotiz ?</summary><p>Installe-la depuis le Microsoft Store sur Windows, ou ouvre l’app dans ton navigateur et choisis « Installer » ou « Ajouter à l’écran d’accueil » sur Android, iPhone, Mac et Linux. Elle fonctionne aussi hors ligne.</p></details>
+          <details><summary>Les taux sont-ils à jour ?</summary><p>Oui : barème 2026 (décret du 8 septembre 2025), plafonds 2026-2028 et réforme de l’ACRE du 1er juillet 2026. Le barème est mis à jour chaque année.</p></details>
+          <details><summary>Comment résilier Pro ?</summary><p>En un clic, depuis le lien « Gérer mon abonnement » de l’app ou de l’e-mail de confirmation. Tu gardes l’accès jusqu’à la fin du mois payé et tes données restent intactes.</p></details>
           <details><summary>Cotiz remplace-t-il un expert-comptable ?</summary><p>Non. Cotiz est un outil d’aide au calcul et à l’organisation. Pour une situation particulière, demande conseil à l’URSSAF ou à un professionnel.</p></details>
-          <details><summary>Et la facturation électronique obligatoire ?</summary><p>Les micro-entrepreneurs devront émettre des factures électroniques via une plateforme agréée à partir de septembre 2027. Cotiz suit cette évolution ; d’ici là, tes factures PDF restent valables.</p></details>
+          <details><summary>Et la facturation électronique obligatoire ?</summary><p>Les micro-entrepreneurs devront émettre des factures électroniques via une plateforme agréée à partir de septembre 2027. D’ici là, tes factures PDF restent valables.</p></details>
         </div>
       </div>
     </section>
@@ -231,11 +246,13 @@
     <section>
       <div class="wrap">
         <div class="final">
-          <h2>Ta prochaine déclaration arrive. Sois prêt.</h2>
-          <p>Gratuit, sans compte, configuré en 1 minute.</p>
-          <a class="btn" href="app/">Ouvrir Cotiz</a>
-          <!-- Après publication sur le Microsoft Store, colle le lien de la fiche ci-dessous et retire l'attribut hidden -->
-          <div class="stores" id="stores" hidden><a href="#">Télécharger sur le Microsoft Store →</a></div>
+          <div>
+            <h2>Ta prochaine déclaration arrive. Sois prêt.</h2>
+            <p>Gratuit, sans inscription, configuré en une minute.</p>
+            <!-- Après publication sur le Microsoft Store, colle le lien de la fiche ci-dessous et retire l'attribut hidden -->
+            <p class="stores" id="stores" hidden><a href="#">Télécharger sur le Microsoft Store</a></p>
+          </div>
+          <a class="btn primary" href="app/">Ouvrir Cotiz</a>
         </div>
       </div>
     </section>
@@ -243,10 +260,11 @@
 
   <footer>
     <div class="wrap">
-      <span>© 2026 Cotiz</span>
+      <a class="logo" href="./" style="font-size:15px"><img src="icons/icon.svg" width="22" height="22" alt=""> Cotiz</a>
       <nav>
         <a href="mentions-legales.html">Mentions légales et CGV</a>
         <a href="confidentialite.html">Confidentialité</a>
+        <span>© 2026</span>
       </nav>
     </div>
   </footer>
